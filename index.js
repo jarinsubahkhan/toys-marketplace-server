@@ -85,6 +85,12 @@ app.post("/postToys", async (req, res) => {
     res.send(result);
 });
 
+app.get('/allToys', async(req,res)=>{
+    const cursor = toysCollection.find();
+    const result = await cursor.toArray();
+    res.send(result);
+})
+
 app.get("/allToys/:text", async(req, res) =>{
     console.log(req.params.text);
     if(req.params.text == "animal" || req.params.text == "character" || req.params.text == "fantasy"){
