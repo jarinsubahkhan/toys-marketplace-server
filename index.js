@@ -79,7 +79,6 @@ app.delete('/toys/:id', async(req, res) => {
 app.post("/postToys", async (req, res) => {
     const body = req.body;
     body.createdAt = new Date();
-
     const result = await toysCollection.insertOne(body);
     console.log(result);
     res.send(result);
