@@ -23,7 +23,7 @@ const client = new MongoClient(uri, {
 async function run() {
   try {
     // Connect the client to the server	(optional starting in v4.7)
-    await client.connect();
+    // await client.connect();
 
 const db = client.db("softToys");
 const toysCollection = db.collection("toys");
@@ -35,6 +35,11 @@ const indexOptions = { name: "name" };
 
 const result = await toysCollection.createIndex(indexKeys, indexOptions);
 
+app.get('/allToys', async(req,res)=>{
+    const cursor = toysCollection.find();
+    const result = await cursor.toArray();
+    res.send(result);
+})
 
 app.get("/toyName/:name", async (req, res)=>{
     const searchText = req.params.name;
@@ -84,11 +89,7 @@ app.post("/postToys", async (req, res) => {
     res.send(result);
 });
 
-app.get('/allToys', async(req,res)=>{
-    const cursor = toysCollection.find();
-    const result = await cursor.toArray();
-    res.send(result);
-})
+
 
 app.get("/allToys/:text", async(req, res) =>{
     console.log(req.params.text);
